@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:5000/api
+@contentType = application/json
+
+### 1. ดึงหนังสือทั้งหมด (EF Core)
+GET {{baseUrl}}/Books
+Accept: {{contentType}}
+
+### 2. ดึงหนังสือตาม ID
+GET {{baseUrl}}/Books/1
+Accept: {{contentType}}
+
+### 3. เพิ่มหนังสือเล่มใหม่ (Valid Data)
+POST {{baseUrl}}/Books
+Content-Type: {{contentType}}
+
+{
+  "title": "Domain-Driven Design: Tackling Complexity in the Heart of Software",
+  "isbn": "978-0321125217",
+  "price": 950.00,
+  "publishedDate": "2003-08-30T00:00:00Z",
+  "fileUrl": "https://storage.ebooks.com/files/ddd-evans.pdf",
+  "authorId": 1,
+  "categoryId": 1
+}
+
+### 4. ทดสอบ Data Validation (ส่งค่าผิดพลาด: Title ว่าง, Price ติดลบ)
+POST {{baseUrl}}/Books
+Content-Type: {{contentType}}
+
+{
+  "title": "",
+  "isbn": "invalid-isbn",
+  "price": -50.00,
+  "publishedDate": "2024-01-01T00:00:00Z",
+  "authorId": 0,
+  "categoryId": 0
+}
+
+### 5. แก้ไขข้อมูลหนังสือ
+PUT {{baseUrl}}/Books/1
+Content-Type: {{contentType}}
+
+{
+  "title": "Clean Code: A Handbook of Agile Software Craftsmanship (2nd Edition)",
+  "isbn": "978-0132350884",
+  "price": 720.00,
+  "publishedDate": "2008-08-01T00:00:00Z",
+  "fileUrl": "https://storage.ebooks.com/files/clean-code-v2.pdf",
+  "authorId": 1,
+  "categoryId": 1
+}
+
+### 6. ลบหนังสือ
+DELETE {{baseUrl}}/Books/1
+
+### 7. ทดสอบ ADO.NET Controller
+GET {{baseUrl}}/AdoBooks
+Accept: {{contentType}}
